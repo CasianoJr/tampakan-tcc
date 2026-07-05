@@ -7,7 +7,7 @@
 ## Quick Questions
 
 - Are you a resident of Tampakan? Y/N
-- Course you want to take?
+- Course you want to take? Agri-Business / Bachelor of Science in Agriculture / Agricultural Technology / Agri-Entrepreneurship
 - School you graduated from?
 - Year graduated?
 
