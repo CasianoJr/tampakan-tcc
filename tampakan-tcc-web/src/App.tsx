@@ -1,11 +1,3 @@
-import './App.css'
-
-function App() {
-  return (
-    <main>
-      <h1>Tampakan Community College</h1>
-    </main>
-  )
+export default function App() {
+  return null
 }
-
-export default App

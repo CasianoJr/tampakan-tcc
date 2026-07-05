@@ -65,3 +65,24 @@ npm run dev
 npm run build
 # Compiles without errors
 ```
+
+---
+
+## Done
+
+| Step | Status |
+|------|--------|
+| Install `react-router-dom`, `framer-motion`, `lucide-react`, `clsx`, `tailwindcss`, `@tailwindcss/vite` | ✅ |
+| Configure Tailwind plugin in `vite.config.ts` | ✅ |
+| Replace `src/index.css` with Tailwind import + custom `@theme` colors | ✅ |
+| Create `Navbar` — responsive with mobile menu toggle | ✅ |
+| Create `Footer` — multi-column with logo, quick links, contact | ✅ |
+| Create `RootLayout` — Navbar + `<Outlet />` + Footer | ✅ |
+| Create `HeroBanner` — headline, subtext, CTAs, Framer Motion fade-in | ✅ |
+| Create `HomePage` | ✅ |
+| Create `router.tsx` — `createBrowserRouter` with root layout + home | ✅ |
+| Update `src/main.tsx` to use `RouterProvider` | ✅ |
+| Replace `src/App.tsx` + remove `src/App.css` | ✅ |
+| Update `index.html` title | ✅ |
+| `npm run build` — 0 errors | ✅ |
+| Dev server responds 200 | ✅ |

@@ -1,24 +1,16 @@
-:root {
-  --harvest-green: #2f6e3b;
-  --deep-soil: #1b3a22;
-  --golden-grain: #e8a93b;
-  --sky-field: #eaf3e9;
-  --slate-ink: #1f2937;
-  --cloud-white: #ffffff;
+@import 'tailwindcss';
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-
-  font: 18px/145% var(--sans);
-  color: var(--slate-ink);
-  background: var(--cloud-white);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@theme {
+  --color-harvest-green: #2f6e3b;
+  --color-deep-soil: #1b3a22;
+  --color-golden-grain: #e8a93b;
+  --color-sky-field: #eaf3e9;
+  --color-slate-ink: #1f2937;
+  --color-cloud-white: #ffffff;
+  --color-success-sprout: #4c9a5b;
 }
 
 body {
   margin: 0;
   min-height: 100svh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
