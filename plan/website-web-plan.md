@@ -192,6 +192,8 @@ tampakan-tcc-web/
 
 Base URL: `https://tampakancommunitycollege.gov.ph`
 
+> **API Reference:** Backend endpoints for all data operations (CRUD, auth, file uploads, etc.) are documented in [`website-ng-plan.md`](./website-ng-plan.md). This frontend routes table covers only the client-side page paths.
+
 **Auth note:** `/student/*` and `/admin/*` (excluding the login pages themselves) are protected routes. `useAuth.ts` holds session state; unauthenticated visits to `/students` or `/student/profile` redirect to `/student/login`, and `/admin` redirects to `/admin/login`. Session/token handling is stubbed client-side in this phase (`localStorage`-free, in-memory or cookie-based) pending backend/API integration.
 
 ### Public Routes
@@ -273,3 +275,7 @@ Base URL: `https://tampakancommunitycollege.gov.ph`
 | Site map / campus location graphic | Custom illustration or map embed | Placeholder — use Google Maps embed of former Koronadal Academy site as interim |
 | OG image (social share) | JPG, 1200×630 | Placeholder — generate from hero imagery once available |
 | Favicon | ICO/SVG | Derive from primary logo once finalized |
+
+## 8. Backend API Plan
+
+The backend is documented in [`website-ng-plan.md`](./website-ng-plan.md) — a NestJS + PostgreSQL API with 18 modules covering auth, students/pre-enrollment, news, events, programs, faculty, gallery, downloads, FAQ, contact, announcements, pages, uploads, settings, admin dashboard, notifications, search, and sitemap.
