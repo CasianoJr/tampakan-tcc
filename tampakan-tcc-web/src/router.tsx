@@ -10,6 +10,8 @@ import AdmissionsPage from './pages/admissions/AdmissionsPage'
 import AdmissionsRequirementsPage from './pages/admissions/AdmissionsRequirementsPage'
 import AdmissionsEnrollmentPage from './pages/admissions/AdmissionsEnrollmentPage'
 import AdmissionsScholarshipsPage from './pages/admissions/AdmissionsScholarshipsPage'
+import NewsListPage from './pages/news/NewsListPage'
+import NewsArticlePage from './pages/news/NewsArticlePage'
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +28,8 @@ export const router = createBrowserRouter([
       { path: '/admissions/requirements', element: <AdmissionsRequirementsPage /> },
       { path: '/admissions/enrollment', element: <AdmissionsEnrollmentPage /> },
       { path: '/admissions/scholarships', element: <AdmissionsScholarshipsPage /> },
+      { path: '/news', element: <NewsListPage /> },
+      { path: '/news/:slug', element: <NewsArticlePage /> },
     ],
   },
 ])
