@@ -6,6 +6,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "postgres:docker:dev": "docker compose -f docker-compose.dev.yml up -d",
+    "postgres:docker:down": "docker compose -f docker-compose.dev.yml down",
     "clean": "powershell -NoProfile -File clean.ps1",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
