@@ -37,6 +37,7 @@ const mockPrisma = {
     update: jest.fn(),
   },
   emailVerificationToken: {
+    create: jest.fn(),
     findUnique: jest.fn(),
     update: jest.fn(),
   },
@@ -355,6 +356,49 @@ describe('AuthService', () => {
       await expect(service.verifyEmail(verifyDto)).rejects.toThrow(
         BadRequestException,
       );
+    });
+  });
+
+  describe('resendVerification', () => {
+    const resendDto = { email: 'a@b.com' };
+
+    it('should generate a token for existing unverified user', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue({
+        id: 1,
+        email: 'a@b.com',
+        emailVerified: false,
+      });
+
+      const result = await service.resendVerification(resendDto);
+
+      expect(result.message).toBe(
+        'If that email is registered, a verification link has been sent',
+      );
+      expect(result.verificationToken).toBe('mock-raw-reset-token');
+      expect(mockPrisma.emailVerificationToken.create).toHaveBeenCalled();
+    });
+
+    it('should return same message for unknown email', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(null);
+
+      const result = await service.resendVerification(resendDto);
+
+      expect(result.message).toBe(
+        'If that email is registered, a verification link has been sent',
+      );
+      expect(result.verificationToken).toBeUndefined();
+    });
+
+    it('should return already verified message when email is verified', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue({
+        id: 1,
+        email: 'a@b.com',
+        emailVerified: true,
+      });
+
+      const result = await service.resendVerification(resendDto);
+
+      expect(result).toEqual({ message: 'Email is already verified' });
     });
   });
 
