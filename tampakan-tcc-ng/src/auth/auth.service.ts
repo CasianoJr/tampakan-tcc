@@ -15,6 +15,7 @@ import { RefreshDto } from './dto/refresh.dto';
 import { LogoutDto } from './dto/logout.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { VerifyEmailDto } from './dto/verify-email.dto';
 
 @Injectable()
 export class AuthService {
@@ -214,5 +215,38 @@ export class AuthService {
     });
 
     return { message: 'Password has been reset successfully' };
+  }
+
+  async verifyEmail(dto: VerifyEmailDto) {
+    const tokenHash = createHash('sha256').update(dto.token).digest('hex');
+
+    const verificationToken =
+      await this.prisma.emailVerificationToken.findUnique({
+        where: { token: tokenHash },
+      });
+
+    if (!verificationToken) {
+      throw new BadRequestException('Invalid or expired verification token');
+    }
+
+    if (verificationToken.used) {
+      throw new BadRequestException('Invalid or expired verification token');
+    }
+
+    if (verificationToken.expiresAt < new Date()) {
+      throw new BadRequestException('Invalid or expired verification token');
+    }
+
+    await this.prisma.user.update({
+      where: { id: verificationToken.userId },
+      data: { emailVerified: true },
+    });
+
+    await this.prisma.emailVerificationToken.update({
+      where: { id: verificationToken.id },
+      data: { used: true },
+    });
+
+    return { message: 'Email verified successfully' };
   }
 }

@@ -36,6 +36,10 @@ const mockPrisma = {
     findUnique: jest.fn(),
     update: jest.fn(),
   },
+  emailVerificationToken: {
+    findUnique: jest.fn(),
+    update: jest.fn(),
+  },
 };
 
 const mockJwt = {
@@ -289,6 +293,66 @@ describe('AuthService', () => {
       });
 
       await expect(service.resetPassword(resetDto)).rejects.toThrow(
+        BadRequestException,
+      );
+    });
+  });
+
+  describe('verifyEmail', () => {
+    const verifyDto = { token: 'valid-raw-token' };
+    const validTokenRecord = {
+      id: 1,
+      userId: 1,
+      token: 'mocked-hash',
+      expiresAt: new Date(Date.now() + 600000),
+      used: false,
+      createdAt: new Date(),
+    };
+
+    it('should verify email for valid token', async () => {
+      mockPrisma.emailVerificationToken.findUnique.mockResolvedValue(
+        validTokenRecord,
+      );
+
+      const result = await service.verifyEmail(verifyDto);
+
+      expect(result).toEqual({ message: 'Email verified successfully' });
+      expect(mockPrisma.user.update).toHaveBeenCalledWith({
+        where: { id: 1 },
+        data: { emailVerified: true },
+      });
+      expect(mockPrisma.emailVerificationToken.update).toHaveBeenCalledWith({
+        where: { id: 1 },
+        data: { used: true },
+      });
+    });
+
+    it('should throw BadRequestException when token not found', async () => {
+      mockPrisma.emailVerificationToken.findUnique.mockResolvedValue(null);
+
+      await expect(service.verifyEmail(verifyDto)).rejects.toThrow(
+        BadRequestException,
+      );
+    });
+
+    it('should throw BadRequestException when token is already used', async () => {
+      mockPrisma.emailVerificationToken.findUnique.mockResolvedValue({
+        ...validTokenRecord,
+        used: true,
+      });
+
+      await expect(service.verifyEmail(verifyDto)).rejects.toThrow(
+        BadRequestException,
+      );
+    });
+
+    it('should throw BadRequestException when token is expired', async () => {
+      mockPrisma.emailVerificationToken.findUnique.mockResolvedValue({
+        ...validTokenRecord,
+        expiresAt: new Date(Date.now() - 600000),
+      });
+
+      await expect(service.verifyEmail(verifyDto)).rejects.toThrow(
         BadRequestException,
       );
     });
