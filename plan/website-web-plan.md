@@ -273,15 +273,18 @@ Auth flow:
 
 ## 7. Assets Needed
 
-| Asset | Type | Status |
+> **Stock imagery:** Until official LGU photos are available, use curated stock photos from [Unsplash](https://unsplash.com), [Pexels](https://pexels.com), or [Pixabay](https://pixabay.com). Choose images related to education, campus life, agriculture, and community. All stock images must have `loading="lazy"` and descriptive `alt` text.
+
+| Asset | Type | Source |
 |---|---|---|
-| Primary logo (color) | SVG | Placeholder — needs real LGU-approved mark |
-| Primary logo (white/reverse) | SVG | Placeholder |
-| Hero banner imagery (campus site / construction photos) | JPG/WebP | Placeholder — request real photos from LGU Tampakan comms team |
+| Primary logo (color) | SVG | Needs real LGU-approved mark |
+| Primary logo (white/reverse) | SVG | Needs real LGU-approved mark |
+| Hero banner imagery | JPG/WebP | Unsplash "campus" or "education" search; fallback to gradient |
+| Section backgrounds | JPG/WebP | Unsplash "agriculture philippines", "students", "community" |
 | Mayor Escobillo official photo | JPG | Real asset needed from LGU |
-| Program icons (Agri-Business, future programs) | SVG (lucide-react or custom) | Can use `lucide-react` stand-ins initially |
-| Site map / campus location graphic | Custom illustration or map embed | Placeholder — use Google Maps embed of former Koronadal Academy site as interim |
-| OG image (social share) | JPG, 1200×630 | Placeholder — generate from hero imagery once available |
+| Program icons | SVG | `lucide-react` stand-ins initially |
+| Site map / campus location | Map embed | Google Maps embed of former Koronadal Academy site |
+| OG image (social share) | JPG, 1200×630 | Generate from hero imagery once available |
 | Favicon | ICO/SVG | Derive from primary logo once finalized |
 
 ## 8. Backend API Plan

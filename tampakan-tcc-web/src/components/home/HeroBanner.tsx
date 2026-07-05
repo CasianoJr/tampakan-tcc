@@ -2,12 +2,20 @@ import { motion } from 'framer-motion'
 
 export default function HeroBanner() {
   return (
-    <section className="bg-gradient-to-br from-harvest-green to-deep-soil text-cloud-white flex min-h-[70svh] items-center justify-center px-4 text-center">
+    <section className="relative flex min-h-[70svh] items-center justify-center overflow-hidden px-4 text-center text-cloud-white">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1523050854058-8df90110c7f1?w=1600&q=80')",
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-br from-harvest-green/85 to-deep-soil/90" />
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="max-w-3xl"
+        className="relative z-10 max-w-3xl"
       >
         <h1 className="mb-4 text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">
           Tampakan Community College: Free, Accessible Higher Education for Every Tampakeño

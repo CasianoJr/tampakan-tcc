@@ -26,11 +26,20 @@ const subpages = [
 export default function AboutPage() {
   return (
     <>
-      <section className="bg-gradient-to-br from-harvest-green to-deep-soil text-cloud-white flex min-h-[40svh] items-center justify-center px-4 text-center">
+      <section className="relative flex min-h-[40svh] items-center justify-center overflow-hidden px-4 text-center text-cloud-white">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1562774053-701939374585?w=1600&q=80')",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-harvest-green/85 to-deep-soil/90" />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          className="relative z-10"
         >
           <h1 className="mb-3 text-3xl font-bold md:text-4xl">
             About Tampakan Community College
@@ -43,8 +52,16 @@ export default function AboutPage() {
         </motion.div>
       </section>
 
-      <section className="bg-cloud-white py-16 px-4">
-        <div className="mx-auto max-w-6xl">
+      <section className="relative overflow-hidden px-4 py-16">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1600&q=80')",
+          }}
+        />
+        <div className="absolute inset-0 bg-cloud-white/92" />
+        <div className="relative z-10 mx-auto max-w-6xl">
           <h2 className="mb-8 text-center text-2xl font-bold text-deep-soil md:text-3xl">
             Quick Overview
           </h2>
@@ -73,13 +90,21 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-sky-field py-16 px-4">
+      <section className="relative overflow-hidden px-4 py-16">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=1600&q=80')",
+          }}
+        />
+        <div className="absolute inset-0 bg-sky-field/90" />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mx-auto max-w-4xl"
+          className="relative z-10 mx-auto max-w-4xl"
         >
           <div className="flex items-start gap-4">
             <Quote size={48} className="shrink-0 text-harvest-green/40" />

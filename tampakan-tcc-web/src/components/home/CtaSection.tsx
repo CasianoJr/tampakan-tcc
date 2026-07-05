@@ -3,13 +3,21 @@ import { Mail, Globe, ExternalLink } from 'lucide-react'
 
 export default function CtaSection() {
   return (
-    <section className="bg-gradient-to-br from-deep-soil to-harvest-green text-cloud-white py-16 px-4">
+    <section className="relative overflow-hidden px-4 py-16 text-cloud-white">
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-fixed"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&q=80')",
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-br from-deep-soil/90 to-harvest-green/90" />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="mx-auto max-w-2xl text-center"
+        className="relative z-10 mx-auto max-w-2xl text-center"
       >
         <h2 className="mb-3 text-2xl font-bold md:text-3xl">Stay Informed</h2>
         <p className="mb-8 text-sky-field/80">

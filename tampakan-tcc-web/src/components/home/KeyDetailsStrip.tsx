@@ -9,8 +9,16 @@ const details = [
 
 export default function KeyDetailsStrip() {
   return (
-    <section className="bg-sky-field py-8">
-      <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 md:grid-cols-4">
+    <section className="relative overflow-hidden py-8">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=1600&q=80')",
+        }}
+      />
+      <div className="absolute inset-0 bg-sky-field/95" />
+      <div className="relative z-10 mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 md:grid-cols-4">
         {details.map((d) => (
           <div key={d.label} className="flex items-center gap-3">
             <d.icon size={28} className="shrink-0 text-harvest-green" />

@@ -9,11 +9,20 @@ const team = [
 export default function LeadershipPage() {
   return (
     <>
-      <section className="bg-gradient-to-br from-harvest-green to-deep-soil text-cloud-white flex min-h-[30svh] items-center justify-center px-4 text-center">
+      <section className="relative flex min-h-[30svh] items-center justify-center overflow-hidden px-4 text-center text-cloud-white">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1600&q=80')",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-harvest-green/85 to-deep-soil/90" />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
+          className="relative z-10"
         >
           <h1 className="text-3xl font-bold md:text-4xl">Leadership</h1>
           <p className="mx-auto mt-2 max-w-2xl text-sky-field/80">
@@ -31,9 +40,12 @@ export default function LeadershipPage() {
             className="mb-12 rounded-xl border border-sky-field p-8"
           >
             <div className="flex flex-col items-center gap-6 md:flex-row">
-              <div className="flex h-28 w-28 shrink-0 items-center justify-center rounded-full bg-harvest-green text-3xl font-bold text-cloud-white">
-                LE
-              </div>
+              <img
+                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=160&q=80"
+                alt="Mayor Leonard T. Escobillo portrait"
+                loading="lazy"
+                className="h-28 w-28 shrink-0 rounded-full object-cover"
+              />
               <div>
                 <div className="flex items-start gap-2">
                   <Quote size={24} className="shrink-0 text-harvest-green/40" />
@@ -68,9 +80,17 @@ export default function LeadershipPage() {
                   key={m.name}
                   className="flex items-center gap-4 rounded-xl border border-sky-field p-6"
                 >
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-sky-field text-sm font-bold text-harvest-green">
-                    {m.initials}
-                  </div>
+                  <img
+                    src={
+                      'https://images.unsplash.com/photo-' +
+                      (m.initials === 'MA'
+                        ? '1573496359142-b8d87734a5a2?w=160&q=80'
+                        : '1507003211169-0a1dd7228f2d?w=160&q=80')
+                    }
+                    alt={`${m.name} portrait`}
+                    loading="lazy"
+                    className="h-14 w-14 shrink-0 rounded-full object-cover"
+                  />
                   <div>
                     <p className="font-semibold text-deep-soil">{m.name}</p>
                     <p className="text-sm text-slate-ink/60">{m.role}</p>

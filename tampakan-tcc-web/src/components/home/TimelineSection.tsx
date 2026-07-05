@@ -11,8 +11,16 @@ const steps = [
 
 export default function TimelineSection() {
   return (
-    <section className="bg-sky-field py-16 px-4">
-      <div className="mx-auto max-w-5xl">
+    <section className="relative overflow-hidden px-4 py-16">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1526512340740-9217d0159da9?w=1600&q=80')",
+        }}
+      />
+      <div className="absolute inset-0 bg-sky-field/85" />
+      <div className="relative z-10 mx-auto max-w-5xl">
         <h2 className="mb-12 text-center text-2xl font-bold text-deep-soil md:text-3xl">
           Our Journey
         </h2>
