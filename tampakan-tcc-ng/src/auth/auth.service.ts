@@ -5,11 +5,13 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { hash, compare } from 'bcrypt';
+import { createHash } from 'crypto';
 import { jwtConstants } from '../config/jwt.config';
 import { PrismaService } from '../prisma/prisma.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { RefreshDto } from './dto/refresh.dto';
+import { LogoutDto } from './dto/logout.dto';
 
 @Injectable()
 export class AuthService {
@@ -88,6 +90,18 @@ export class AuthService {
       throw new UnauthorizedException('Invalid or expired refresh token');
     }
 
+    const tokenHash = createHash('sha256')
+      .update(dto.refreshToken)
+      .digest('hex');
+
+    const blacklisted = await this.prisma.blacklistedToken.findUnique({
+      where: { token: tokenHash },
+    });
+
+    if (blacklisted) {
+      throw new UnauthorizedException('Invalid or expired refresh token');
+    }
+
     const user = await this.prisma.user.findUnique({
       where: { id: payload.sub },
     });
@@ -112,5 +126,30 @@ export class AuthService {
         role: user.role,
       },
     };
+  }
+
+  async logout(dto: LogoutDto) {
+    let payload: { sub: number; email: string; role: string; exp: number };
+
+    try {
+      payload = await this.jwtService.verifyAsync(dto.refreshToken);
+    } catch {
+      throw new UnauthorizedException('Invalid or expired refresh token');
+    }
+
+    const tokenHash = createHash('sha256')
+      .update(dto.refreshToken)
+      .digest('hex');
+
+    const expiresAt = new Date(payload.exp * 1000);
+
+    await this.prisma.blacklistedToken.create({
+      data: {
+        token: tokenHash,
+        expiresAt,
+      },
+    });
+
+    return { message: 'Logged out successfully' };
   }
 }

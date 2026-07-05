@@ -9,10 +9,21 @@ jest.mock('bcrypt', () => ({
   compare: jest.fn(),
 }));
 
+jest.mock('crypto', () => ({
+  createHash: jest.fn().mockReturnValue({
+    update: jest.fn().mockReturnThis(),
+    digest: jest.fn().mockReturnValue('mocked-hash'),
+  }),
+}));
+
 import * as bcrypt from 'bcrypt';
 
 const mockPrisma = {
   user: {
+    findUnique: jest.fn(),
+    create: jest.fn(),
+  },
+  blacklistedToken: {
     findUnique: jest.fn(),
     create: jest.fn(),
   },
@@ -115,6 +126,7 @@ describe('AuthService', () => {
         email: 'a@b.com',
         role: 'STUDENT',
       });
+      mockPrisma.blacklistedToken.findUnique.mockResolvedValue(null);
       mockPrisma.user.findUnique.mockResolvedValue({
         id: 1,
         email: 'a@b.com',
@@ -143,12 +155,29 @@ describe('AuthService', () => {
       );
     });
 
+    it('should throw UnauthorizedException when token is blacklisted', async () => {
+      mockJwt.verifyAsync.mockResolvedValue({
+        sub: 1,
+        email: 'a@b.com',
+        role: 'STUDENT',
+      });
+      mockPrisma.blacklistedToken.findUnique.mockResolvedValue({
+        id: 1,
+        token: 'mocked-hash',
+      });
+
+      await expect(service.refresh(refreshDto)).rejects.toThrow(
+        UnauthorizedException,
+      );
+    });
+
     it('should throw UnauthorizedException when user is inactive', async () => {
       mockJwt.verifyAsync.mockResolvedValue({
         sub: 1,
         email: 'a@b.com',
         role: 'STUDENT',
       });
+      mockPrisma.blacklistedToken.findUnique.mockResolvedValue(null);
       mockPrisma.user.findUnique.mockResolvedValue({
         id: 1,
         email: 'a@b.com',
@@ -158,6 +187,37 @@ describe('AuthService', () => {
       });
 
       await expect(service.refresh(refreshDto)).rejects.toThrow(
+        UnauthorizedException,
+      );
+    });
+  });
+
+  describe('logout', () => {
+    const logoutDto = { refreshToken: 'token-to-blacklist' };
+
+    it('should blacklist the token and return success', async () => {
+      mockJwt.verifyAsync.mockResolvedValue({
+        sub: 1,
+        email: 'a@b.com',
+        role: 'STUDENT',
+        exp: 9999999999,
+      });
+
+      const result = await service.logout(logoutDto);
+
+      expect(result).toEqual({ message: 'Logged out successfully' });
+      expect(mockPrisma.blacklistedToken.create).toHaveBeenCalledWith({
+        data: {
+          token: 'mocked-hash',
+          expiresAt: expect.any(Date),
+        },
+      });
+    });
+
+    it('should throw UnauthorizedException when token is invalid', async () => {
+      mockJwt.verifyAsync.mockRejectedValue(new Error('invalid'));
+
+      await expect(service.logout(logoutDto)).rejects.toThrow(
         UnauthorizedException,
       );
     });
