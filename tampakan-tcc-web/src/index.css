@@ -1,0 +1,24 @@
+:root {
+  --harvest-green: #2f6e3b;
+  --deep-soil: #1b3a22;
+  --golden-grain: #e8a93b;
+  --sky-field: #eaf3e9;
+  --slate-ink: #1f2937;
+  --cloud-white: #ffffff;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  font: 18px/145% var(--sans);
+  color: var(--slate-ink);
+  background: var(--cloud-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
