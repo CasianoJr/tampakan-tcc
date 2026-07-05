@@ -194,7 +194,15 @@ Base URL: `https://tampakancommunitycollege.gov.ph`
 
 > **API Reference:** Backend endpoints for all data operations (CRUD, auth, file uploads, etc.) are documented in [`website-ng-plan.md`](./website-ng-plan.md). This frontend routes table covers only the client-side page paths.
 
-**Auth note:** `/student/*` and `/admin/*` (excluding the login pages themselves) are protected routes. `useAuth.ts` holds session state; unauthenticated visits to `/students` or `/student/profile` redirect to `/student/login`, and `/admin` redirects to `/admin/login`. Session/token handling is stubbed client-side in this phase (`localStorage`-free, in-memory or cookie-based) pending backend/API integration.
+**Auth note:** `/student/*` and `/admin/*` (excluding the login pages themselves) are protected routes.
+
+Auth flow:
+- Login pages (`/student/login`, `/admin/login`) submit credentials to `POST /api/auth/login` (or `student/login`, `admin/login`)
+- On success, store JWT in an httpOnly cookie (preferred) or in-memory variable (not `localStorage`)
+- `useAuth.ts` holds session state, checks token expiry, and provides login/logout/refresh helpers
+- Route guards (`ProtectedRoute` wrapper) check auth state and redirect to the appropriate login page
+- Token refresh is handled transparently via an axios/fetch interceptor calling `POST /api/auth/refresh`
+- **Phased implementation**: Phase 1–3 will stub auth client-side (hardcoded redirects); full JWT integration happens once the backend auth endpoints are stable
 
 ### Public Routes
 
@@ -282,6 +290,79 @@ The backend is documented in [`website-ng-plan.md`](./website-ng-plan.md) — a 
 
 ## 9. Implementation Phases
 
-> **One endpoint/page per phase.** Each phase implements exactly one piece — one API endpoint or one frontend page. No bundling.
+> **One page per phase.** Each phase implements exactly one page (and its child components). No bundling.
 
-Phase files live under `plan/ng/` and `plan/web/`. After implementing a phase, add a `## Done` section at the bottom of the phase `.md` file listing each completed step with status (`✅` / `❌`).
+Phase files live under `plan/web/web-phase-*.md`. After implementing a phase, add a `## Done` section at the bottom of the phase file listing each completed step with status (`✅` / `❌`).
+
+### Build Order
+
+Pages are implemented in dependency order — parent before child, public before auth-guarded:
+
+| Phase | Page | Depends On |
+|-------|------|------------|
+| 1 | Scaffold (Vite + React) | — |
+| 2 | Home page (layout shell + HeroBanner) | Phase 1 |
+| 3 | Home page (remaining sections) | Phase 2 |
+| 4 | `/about` | Phase 2 (layout) |
+| 5 | `/about/history`, `/about/vision-mission`, `/about/leadership` | Phase 4 |
+| 6 | `/academics` | Phase 2 |
+| 7 | `/academics/programs`, `/academics/programs/:slug`, `/academics/calendar` | Phase 6 |
+| 8 | `/admissions`, `/admissions/requirements`, `/admissions/enrollment`, `/admissions/scholarships` | Phase 2 |
+| 9 | `/news`, `/news/:slug` | Phase 2 |
+| 10 | `/events`, `/events/:slug` | Phase 2 |
+| 11 | `/student-life`, `/student-life/organizations`, `/student-life/services` | Phase 2 |
+| 12 | `/faculty`, `/faculty/:slug` | Phase 2 |
+| 13 | `/contact`, `/downloads`, `/gallery`, `/faq` | Phase 2 |
+| 14 | `/pre-enrollment` | Phase 2 |
+| 15 | `/student/login`, `/students`, `/student/profile` | Phase 2 + backend auth |
+| 16 | `/admin/login`, `/admin` dashboard, admin CRUD pages | Phase 2 + backend auth |
+| 17 | `NotFoundPage` (404), error boundaries | Phase 2 |
+
+### Per-Phase Workflow
+
+1. Create the page component in `src/pages/`
+2. Add route to `src/router.tsx`
+3. Create any new shared components in `src/components/`
+4. Add mock data to `src/data/` if the page displays dynamic content
+5. `npm run build` — verify 0 errors
+6. Manual check in browser
+7. Add a `## Done` section at the bottom of the phase file
+
+## 10. Testing Strategy
+
+| Layer | Tool | What to Test |
+|-------|------|-------------|
+| Unit | `vitest` | Utility functions, hooks, data transformations |
+| Component | `vitest` + `@testing-library/react` | UI components render correctly, user interactions fire handlers, conditional states (loading/empty/error) |
+| Page | `vitest` + `@testing-library/react` | Page renders all sections, navigation links work |
+| Accessibility | `vitest` + `@axe-core/react` | Automated aXe checks on key pages |
+| Visual | Manual | Responsive layout at 3 breakpoints (mobile 375px, tablet 768px, desktop 1280px) |
+
+**Coverage target:** ≥80% for shared components (`src/components/ui/*`, `src/components/motion/*`, `src/hooks/*`, `src/lib/*`). Page-level tests are smoke-only (renders without crashing + key content assertions).
+
+Test files live in `tests/` mirroring `src/` structure:
+```
+tests/
+├── setup.ts
+├── components/
+│   └── HeroBanner.test.tsx
+├── hooks/
+│   └── useMediaQuery.test.ts
+└── pages/
+    └── HomePage.test.tsx
+```
+
+## 11. Accessibility (a11y)
+
+| Requirement | How |
+|-------------|-----|
+| Semantic HTML | Use `<nav>`, `<main>`, `<section>`, `<footer>`, `<h1>`–`<h6>` landmarks |
+| Skip link | Hidden "Skip to content" link as first focusable element |
+| Color contrast | All text/background combos meet WCAG AA (4.5:1 normal, 3:1 large) |
+| Focus indicators | Visible `:focus-visible` ring on all interactive elements |
+| ARIA labels | `aria-label` on icon-only buttons (mobile menu, social links) |
+| Form labels | Every `<input>` / `<select>` has an associated `<label>` |
+| Motion | `prefers-reduced-motion` — Framer Motion respects this by default with `useReducedMotion` |
+| Screen reader | Announce dynamic content changes with `aria-live` regions |
+| Keyboard | All interactions work via Tab/Enter/Escape; no keyboard traps |
+| Images | Every `<img>` has meaningful `alt` text; decorative images use `alt=""` |
