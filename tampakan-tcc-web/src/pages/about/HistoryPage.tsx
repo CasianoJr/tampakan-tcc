@@ -37,13 +37,13 @@ export default function HistoryPage() {
   return (
     <>
       <section className="relative flex min-h-[30svh] items-center justify-center overflow-hidden px-4 text-center text-cloud-white">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1461360228754-6e81c478b882?w=1600&q=80')",
-          }}
-        />
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage:
+                "url('/assets/TCC_building.jpg')",
+            }}
+          />
         <div className="absolute inset-0 bg-gradient-to-br from-harvest-green/85 to-deep-soil/90" />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -58,16 +58,8 @@ export default function HistoryPage() {
         </motion.div>
       </section>
 
-      <section className="relative overflow-hidden px-4 py-16">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-fixed"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?w=1600&q=80')",
-          }}
-        />
-        <div className="absolute inset-0 bg-cloud-white/90" />
-        <div className="relative z-10 mx-auto max-w-3xl">
+      <section className="bg-cloud-white px-4 py-16">
+        <div className="mx-auto max-w-3xl">
           {milestones.map((m, i) => (
             <motion.div
               key={m.year}

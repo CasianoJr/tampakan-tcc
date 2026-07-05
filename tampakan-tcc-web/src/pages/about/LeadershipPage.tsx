@@ -10,13 +10,13 @@ export default function LeadershipPage() {
   return (
     <>
       <section className="relative flex min-h-[30svh] items-center justify-center overflow-hidden px-4 text-center text-cloud-white">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1600&q=80')",
-          }}
-        />
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage:
+                "url('/assets/TCC_building.jpg')",
+            }}
+          />
         <div className="absolute inset-0 bg-gradient-to-br from-harvest-green/85 to-deep-soil/90" />
         <motion.div
           initial={{ opacity: 0, y: 20 }}

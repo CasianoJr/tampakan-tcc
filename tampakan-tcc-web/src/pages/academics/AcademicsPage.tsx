@@ -21,13 +21,13 @@ export default function AcademicsPage() {
   return (
     <>
       <section className="relative flex min-h-[30svh] items-center justify-center overflow-hidden px-4 text-center text-cloud-white">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=1600&q=80')",
-          }}
-        />
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage:
+                "url('/assets/TCC_building.jpg')",
+            }}
+          />
         <div className="absolute inset-0 bg-gradient-to-br from-harvest-green/85 to-deep-soil/90" />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -42,16 +42,8 @@ export default function AcademicsPage() {
         </motion.div>
       </section>
 
-      <section className="relative overflow-hidden px-4 py-16">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1523050854058-8df90110c7f1?w=1600&q=80')",
-          }}
-        />
-        <div className="absolute inset-0 bg-cloud-white/92" />
-        <div className="relative z-10 mx-auto max-w-4xl">
+      <section className="bg-cloud-white px-4 py-16">
+        <div className="mx-auto max-w-4xl">
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -90,21 +82,13 @@ export default function AcademicsPage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden px-4 py-16">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-fixed"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=1600&q=80')",
-          }}
-        />
-        <div className="absolute inset-0 bg-sky-field/90" />
+      <section className="bg-sky-field px-4 py-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="relative z-10 mx-auto max-w-3xl text-center"
+          className="mx-auto max-w-3xl text-center"
         >
           <Sprout size={48} className="mx-auto mb-4 text-harvest-green" />
           <h2 className="mb-3 text-2xl font-bold text-deep-soil">

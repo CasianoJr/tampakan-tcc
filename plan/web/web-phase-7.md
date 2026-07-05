@@ -2,22 +2,22 @@
 
 ## Goal
 
-Upgrade the look and feel of every implemented page by adding curated stock photos as hero/section backgrounds with gradient overlays, plus placeholder profile imagery.
+Add curated stock photos as hero backgrounds with gradient overlays, real local imagery for authenticity, and revert unnecessary section backgrounds to solid colors.
 
 ## Steps
 
-1. **HeroBanner** — add full-bleed Unsplash campus background with dark gradient overlay
-2. **AboutPage** — add hero bg image
-3. **HistoryPage** — add hero bg image
-4. **VisionMissionPage** — add hero bg image
-5. **LeadershipPage** — add hero bg image; replace initials placeholder with stock profile photo for mayor
-6. **AcademicsPage** — add hero bg image; add bg to Agri-Business spotlight section
-7. **Home section components** — add background polish to TimelineSection, PreEnrollNowSection, CtaSection
-8. Build & verify
+1. **All pages** — add hero background images with dark gradient overlays
+2. **Home** — add bg imagery only to CtaSection (Stay Informed); all other home sections use solid colors
+3. **/about pages** — hero sections use `/assets/TCC_building.jpg` (local); content sections use solid colors
+4. **AcademicsPage** — hero uses `/assets/TCC_building.jpg`; content sections use solid colors
+5. Build & verify
 
 ## Image Policy
 
-All placeholder imagery sourced from [Unsplash](https://unsplash.com). Replace with official LGU photos when available. Every image uses `loading="lazy"` / descriptive `alt` text.
+- Hero backgrounds sourced from [Unsplash](https://unsplash.com) initially.
+- `/about` and `/academics` hero sections use local file `/public/assets/TCC_building.jpg`.
+- Replace all placeholder imagery with official LGU photos when available.
+- Every `<img>` uses `loading="lazy"` and descriptive `alt` text.
 
 ## Verification
 
@@ -30,26 +30,25 @@ npm run build
 
 ## Done
 
-| Page / Component | Upgrade |
+| Page / Component | Change |
 |---|---|
-| HeroBanner | Unsplash campus bg + gradient overlay |
-| AboutPage — hero | Campus building bg |
-| AboutPage — overview cards | Student walk bg with overlay |
-| AboutPage — mayor message | Community bg with overlay |
-| HistoryPage — hero | Journey road bg |
-| HistoryPage — timeline | Library/study bg (bg-fixed) |
-| VisionMissionPage — hero | Sunrise/inspiration bg |
-| VisionMissionPage — content | Study/laptop bg (bg-fixed) |
-| LeadershipPage — hero | Team meeting bg |
-| LeadershipPage — mayor portrait | Stock headshot (unsplash) |
-| LeadershipPage — team cards | Stock profile photos |
-| AcademicsPage — hero | Library books bg |
-| AcademicsPage — content | Graduation/students bg |
-| AcademicsPage — Agri spotlight | Agriculture/farm bg with overlay |
-| Home — KeyDetailsStrip | Community bg with overlay |
-| Home — PreEnrollNowSection | Lecture hall bg with overlay |
-| Home — TimelineSection | Team/group bg with overlay |
-| Home — ProgramsPreview | Students walking bg with overlay |
-| Home — CtaSection | Lecture hall bg (bg-fixed) + gradient overlay |
+| HeroBanner | Solid gradient (no bg image) |
+| KeyDetailsStrip | Solid bg-sky-field (no bg image) |
+| PreEnrollNowSection | Solid bg-cloud-white (no bg image) |
+| TimelineSection | Solid bg-sky-field (no bg image) |
+| ProgramsPreview | Solid bg-cloud-white (no bg image) |
+| CtaSection | Unsplash lecture hall bg + gradient overlay |
+| AboutPage — hero | `TCC_building.jpg` + gradient overlay |
+| AboutPage — overview cards | Solid bg-cloud-white |
+| AboutPage — mayor message | Solid bg-sky-field |
+| HistoryPage — hero | `TCC_building.jpg` + gradient overlay |
+| HistoryPage — timeline | Solid bg-cloud-white |
+| VisionMissionPage — hero | `TCC_building.jpg` + gradient overlay |
+| VisionMissionPage — content | Solid bg-cloud-white |
+| LeadershipPage — hero | `TCC_building.jpg` + gradient overlay |
+| LeadershipPage — content | Solid bg-cloud-white; initials placeholders |
+| AcademicsPage — hero | `TCC_building.jpg` + gradient overlay |
+| AcademicsPage — content cards | Solid bg-cloud-white |
+| AcademicsPage — Agri spotlight | Solid bg-sky-field |
 | website-web-plan.md | Added stock imagery policy in §7 |
 | `npm run build` | 0 errors |

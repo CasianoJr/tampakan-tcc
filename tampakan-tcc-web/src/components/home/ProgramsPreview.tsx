@@ -24,16 +24,8 @@ const programs = [
 
 export default function ProgramsPreview() {
   return (
-    <section className="relative overflow-hidden px-4 py-16">
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1600&q=80')",
-        }}
-      />
-      <div className="absolute inset-0 bg-cloud-white/90" />
-      <div className="relative z-10 mx-auto max-w-6xl">
+    <section className="bg-cloud-white px-4 py-16">
+      <div className="mx-auto max-w-6xl">
         <h2 className="mb-3 text-center text-2xl font-bold text-deep-soil md:text-3xl">
           Planned Programs
         </h2>

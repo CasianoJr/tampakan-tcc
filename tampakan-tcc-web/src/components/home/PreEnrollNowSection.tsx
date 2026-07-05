@@ -3,21 +3,13 @@ import { ArrowRight, LogIn } from 'lucide-react'
 
 export default function PreEnrollNowSection() {
   return (
-    <section className="relative overflow-hidden px-4 py-16">
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&q=80')",
-        }}
-      />
-      <div className="absolute inset-0 bg-cloud-white/85" />
+    <section className="bg-cloud-white px-4 py-16">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="relative z-10 mx-auto max-w-4xl rounded-2xl bg-harvest-green p-8 text-center text-cloud-white md:p-12"
+        className="mx-auto max-w-4xl rounded-2xl bg-harvest-green p-8 text-center text-cloud-white md:p-12"
       >
         <h2 className="mb-3 text-2xl font-bold md:text-3xl">
           Secure Your Slot Today
