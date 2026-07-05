@@ -5,6 +5,7 @@ import AboutPage from './pages/about/AboutPage'
 import HistoryPage from './pages/about/HistoryPage'
 import VisionMissionPage from './pages/about/VisionMissionPage'
 import LeadershipPage from './pages/about/LeadershipPage'
+import AcademicsPage from './pages/academics/AcademicsPage'
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ export const router = createBrowserRouter([
       { path: '/about/history', element: <HistoryPage /> },
       { path: '/about/vision-mission', element: <VisionMissionPage /> },
       { path: '/about/leadership', element: <LeadershipPage /> },
+      { path: '/academics', element: <AcademicsPage /> },
     ],
   },
 ])
