@@ -23,6 +23,7 @@ import ContactPage from './pages/ContactPage'
 import DownloadsPage from './pages/DownloadsPage'
 import GalleryPage from './pages/GalleryPage'
 import FaqPage from './pages/FaqPage'
+import PreEnrollmentPage from './pages/PreEnrollmentPage'
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,7 @@ export const router = createBrowserRouter([
       { path: '/downloads', element: <DownloadsPage /> },
       { path: '/gallery', element: <GalleryPage /> },
       { path: '/faq', element: <FaqPage /> },
+      { path: '/pre-enrollment', element: <PreEnrollmentPage /> },
     ],
   },
 ])
