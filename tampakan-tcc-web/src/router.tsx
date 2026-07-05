@@ -21,6 +21,7 @@ import FacultyDirectoryPage from './pages/faculty/FacultyDirectoryPage'
 import FacultyProfilePage from './pages/faculty/FacultyProfilePage'
 import ContactPage from './pages/ContactPage'
 import DownloadsPage from './pages/DownloadsPage'
+import GalleryPage from './pages/GalleryPage'
 
 export const router = createBrowserRouter([
   {
@@ -48,6 +49,7 @@ export const router = createBrowserRouter([
       { path: '/faculty/:slug', element: <FacultyProfilePage /> },
       { path: '/contact', element: <ContactPage /> },
       { path: '/downloads', element: <DownloadsPage /> },
+      { path: '/gallery', element: <GalleryPage /> },
     ],
   },
 ])
