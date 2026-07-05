@@ -12,6 +12,8 @@ import AdmissionsEnrollmentPage from './pages/admissions/AdmissionsEnrollmentPag
 import AdmissionsScholarshipsPage from './pages/admissions/AdmissionsScholarshipsPage'
 import NewsListPage from './pages/news/NewsListPage'
 import NewsArticlePage from './pages/news/NewsArticlePage'
+import EventsListPage from './pages/events/EventsListPage'
+import EventDetailPage from './pages/events/EventDetailPage'
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +32,8 @@ export const router = createBrowserRouter([
       { path: '/admissions/scholarships', element: <AdmissionsScholarshipsPage /> },
       { path: '/news', element: <NewsListPage /> },
       { path: '/news/:slug', element: <NewsArticlePage /> },
+      { path: '/events', element: <EventsListPage /> },
+      { path: '/events/:slug', element: <EventDetailPage /> },
     ],
   },
 ])
