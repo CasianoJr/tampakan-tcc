@@ -402,6 +402,47 @@ describe('AuthService', () => {
     });
   });
 
+  describe('changePassword', () => {
+    const userId = 1;
+    const changeDto = { currentPassword: 'oldPass123', newPassword: 'newPass456' };
+
+    it('should change password for valid credentials', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue({
+        id: 1,
+        password: '$2b$12$mockhashed',
+      });
+      (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+
+      const result = await service.changePassword(userId, changeDto);
+
+      expect(result).toEqual({ message: 'Password changed successfully' });
+      expect(mockPrisma.user.update).toHaveBeenCalledWith({
+        where: { id: 1 },
+        data: { password: '$2b$12$mockhashed' },
+      });
+    });
+
+    it('should throw UnauthorizedException when current password is wrong', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue({
+        id: 1,
+        password: '$2b$12$mockhashed',
+      });
+      (bcrypt.compare as jest.Mock).mockResolvedValue(false);
+
+      await expect(
+        service.changePassword(userId, changeDto),
+      ).rejects.toThrow(UnauthorizedException);
+    });
+
+    it('should throw UnauthorizedException when user not found', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(null);
+
+      await expect(
+        service.changePassword(userId, changeDto),
+      ).rejects.toThrow(UnauthorizedException);
+    });
+  });
+
   describe('logout', () => {
     const logoutDto = { refreshToken: 'token-to-blacklist' };
 
