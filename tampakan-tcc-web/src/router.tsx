@@ -14,6 +14,9 @@ import NewsListPage from './pages/news/NewsListPage'
 import NewsArticlePage from './pages/news/NewsArticlePage'
 import EventsListPage from './pages/events/EventsListPage'
 import EventDetailPage from './pages/events/EventDetailPage'
+import StudentLifePage from './pages/student-life/StudentLifePage'
+import OrganizationsPage from './pages/student-life/OrganizationsPage'
+import StudentServicesPage from './pages/student-life/StudentServicesPage'
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +37,9 @@ export const router = createBrowserRouter([
       { path: '/news/:slug', element: <NewsArticlePage /> },
       { path: '/events', element: <EventsListPage /> },
       { path: '/events/:slug', element: <EventDetailPage /> },
+      { path: '/student-life', element: <StudentLifePage /> },
+      { path: '/student-life/organizations', element: <OrganizationsPage /> },
+      { path: '/student-life/services', element: <StudentServicesPage /> },
     ],
   },
 ])
