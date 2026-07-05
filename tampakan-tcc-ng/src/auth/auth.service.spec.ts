@@ -14,6 +14,9 @@ jest.mock('crypto', () => ({
     update: jest.fn().mockReturnThis(),
     digest: jest.fn().mockReturnValue('mocked-hash'),
   }),
+  randomBytes: jest.fn().mockReturnValue({
+    toString: jest.fn().mockReturnValue('mock-raw-reset-token'),
+  }),
 }));
 
 import * as bcrypt from 'bcrypt';
@@ -25,6 +28,9 @@ const mockPrisma = {
   },
   blacklistedToken: {
     findUnique: jest.fn(),
+    create: jest.fn(),
+  },
+  passwordResetToken: {
     create: jest.fn(),
   },
 };
@@ -189,6 +195,37 @@ describe('AuthService', () => {
       await expect(service.refresh(refreshDto)).rejects.toThrow(
         UnauthorizedException,
       );
+    });
+  });
+
+  describe('forgotPassword', () => {
+    const forgotDto = { email: 'a@b.com' };
+
+    it('should generate a token for existing user', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue({
+        id: 1,
+        email: 'a@b.com',
+        name: 'Test',
+      });
+
+      const result = await service.forgotPassword(forgotDto);
+
+      expect(result.message).toBe(
+        'If that email is registered, a reset link has been sent',
+      );
+      expect(result.resetToken).toBe('mock-raw-reset-token');
+      expect(mockPrisma.passwordResetToken.create).toHaveBeenCalled();
+    });
+
+    it('should return same message for unknown email', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(null);
+
+      const result = await service.forgotPassword(forgotDto);
+
+      expect(result.message).toBe(
+        'If that email is registered, a reset link has been sent',
+      );
+      expect(result.resetToken).toBeUndefined();
     });
   });
 
