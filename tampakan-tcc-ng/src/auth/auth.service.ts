@@ -18,6 +18,7 @@ import { ResetPasswordDto } from './dto/reset-password.dto';
 import { VerifyEmailDto } from './dto/verify-email.dto';
 import { ResendVerificationDto } from './dto/resend-verification.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import { StudentLoginDto } from './dto/student-login.dto';
 
 @Injectable()
 export class AuthService {
@@ -307,5 +308,37 @@ export class AuthService {
     });
 
     return { message: 'Password changed successfully' };
+  }
+
+  async studentLogin(dto: StudentLoginDto) {
+    const preEnrollment = await this.prisma.preEnrollment.findUnique({
+      where: { referenceNumber: dto.referenceNumber },
+    });
+
+    if (!preEnrollment) {
+      throw new UnauthorizedException('Invalid reference number or birthdate');
+    }
+
+    const birthdateStr = preEnrollment.birthdate.toISOString().split('T')[0];
+    if (birthdateStr !== dto.birthdate) {
+      throw new UnauthorizedException('Invalid reference number or birthdate');
+    }
+
+    const payload = {
+      sub: preEnrollment.id,
+      role: 'STUDENT',
+      refNo: preEnrollment.referenceNumber,
+    };
+
+    return {
+      access_token: this.jwtService.sign(payload, { expiresIn: 900 }),
+      refresh_token: this.jwtService.sign(payload, { expiresIn: 604800 }),
+      student: {
+        id: preEnrollment.id,
+        referenceNumber: preEnrollment.referenceNumber,
+        fullName: preEnrollment.fullName,
+        status: preEnrollment.status,
+      },
+    };
   }
 }

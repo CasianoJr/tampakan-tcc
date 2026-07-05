@@ -41,6 +41,9 @@ const mockPrisma = {
     findUnique: jest.fn(),
     update: jest.fn(),
   },
+  preEnrollment: {
+    findUnique: jest.fn(),
+  },
 };
 
 const mockJwt = {
@@ -440,6 +443,58 @@ describe('AuthService', () => {
       await expect(
         service.changePassword(userId, changeDto),
       ).rejects.toThrow(UnauthorizedException);
+    });
+  });
+
+  describe('studentLogin', () => {
+    const loginDto = {
+      referenceNumber: 'TCC-ABC123',
+      birthdate: '2000-01-15',
+    };
+    const mockPreEnrollment = {
+      id: 1,
+      referenceNumber: 'TCC-ABC123',
+      fullName: 'Juan Dela Cruz',
+      birthdate: new Date('2000-01-15'),
+      contactNumber: '09170000000',
+      status: 'PENDING',
+    };
+
+    it('should return tokens for valid reference number and birthdate', async () => {
+      mockPrisma.preEnrollment.findUnique.mockResolvedValue(
+        mockPreEnrollment,
+      );
+
+      const result = await service.studentLogin(loginDto);
+
+      expect(result.access_token).toBe('mock-token');
+      expect(result.refresh_token).toBe('mock-token');
+      expect(result.student).toEqual({
+        id: 1,
+        referenceNumber: 'TCC-ABC123',
+        fullName: 'Juan Dela Cruz',
+        status: 'PENDING',
+      });
+    });
+
+    it('should throw UnauthorizedException when reference number not found', async () => {
+      mockPrisma.preEnrollment.findUnique.mockResolvedValue(null);
+
+      await expect(service.studentLogin(loginDto)).rejects.toThrow(
+        UnauthorizedException,
+      );
+    });
+
+    it('should throw UnauthorizedException when birthdate does not match', async () => {
+      mockPrisma.preEnrollment.findUnique.mockResolvedValue(
+        mockPreEnrollment,
+      );
+
+      const wrongDto = { ...loginDto, birthdate: '1999-12-31' };
+
+      await expect(service.studentLogin(wrongDto)).rejects.toThrow(
+        UnauthorizedException,
+      );
     });
   });
 

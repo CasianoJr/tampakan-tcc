@@ -47,3 +47,20 @@ model EmailVerificationToken {
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
 }
+
+model PreEnrollment {
+  id               Int      @id @default(autoincrement())
+  referenceNumber  String   @unique
+  fullName         String
+  birthdate        DateTime
+  contactNumber    String
+  email            String?
+  address          String
+  lastSchool       String
+  desiredProgram   String
+  guardianName     String
+  guardianContact  String
+  status           String   @default("PENDING")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
