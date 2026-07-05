@@ -19,6 +19,7 @@ import { VerifyEmailDto } from './dto/verify-email.dto';
 import { ResendVerificationDto } from './dto/resend-verification.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { StudentLoginDto } from './dto/student-login.dto';
+import { AdminLoginDto } from './dto/admin-login.dto';
 
 @Injectable()
 export class AuthService {
@@ -308,6 +309,39 @@ export class AuthService {
     });
 
     return { message: 'Password changed successfully' };
+  }
+
+  async adminLogin(dto: AdminLoginDto) {
+    const user = await this.prisma.user.findUnique({
+      where: { email: dto.email },
+    });
+
+    if (!user || !user.isActive) {
+      throw new UnauthorizedException('Invalid email or password');
+    }
+
+    if (user.role !== 'ADMIN') {
+      throw new UnauthorizedException('Admin access required');
+    }
+
+    const passwordValid = await compare(dto.password, user.password);
+
+    if (!passwordValid) {
+      throw new UnauthorizedException('Invalid email or password');
+    }
+
+    const payload = { sub: user.id, email: user.email, role: user.role };
+
+    return {
+      access_token: this.jwtService.sign(payload, { expiresIn: 900 }),
+      refresh_token: this.jwtService.sign(payload, { expiresIn: 604800 }),
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+      },
+    };
   }
 
   async studentLogin(dto: StudentLoginDto) {

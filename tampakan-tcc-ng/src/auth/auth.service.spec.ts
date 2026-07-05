@@ -498,6 +498,54 @@ describe('AuthService', () => {
     });
   });
 
+  describe('adminLogin', () => {
+    const adminDto = { email: 'admin@tcc.edu', password: 'admin123' };
+    const mockAdmin = {
+      id: 1,
+      email: 'admin@tcc.edu',
+      name: 'Admin User',
+      password: '$2b$12$mockhashed',
+      role: 'ADMIN',
+      isActive: true,
+    };
+
+    it('should return tokens for valid admin credentials', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(mockAdmin);
+      (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+
+      const result = await service.adminLogin(adminDto);
+
+      expect(result.access_token).toBe('mock-token');
+      expect(result.refresh_token).toBe('mock-token');
+      expect(result.user).toEqual({
+        id: 1,
+        email: 'admin@tcc.edu',
+        name: 'Admin User',
+        role: 'ADMIN',
+      });
+    });
+
+    it('should throw UnauthorizedException when user is not ADMIN', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue({
+        ...mockAdmin,
+        role: 'STUDENT',
+      });
+
+      await expect(service.adminLogin(adminDto)).rejects.toThrow(
+        UnauthorizedException,
+      );
+    });
+
+    it('should throw UnauthorizedException for wrong password', async () => {
+      mockPrisma.user.findUnique.mockResolvedValue(mockAdmin);
+      (bcrypt.compare as jest.Mock).mockResolvedValue(false);
+
+      await expect(service.adminLogin(adminDto)).rejects.toThrow(
+        UnauthorizedException,
+      );
+    });
+  });
+
   describe('logout', () => {
     const logoutDto = { refreshToken: 'token-to-blacklist' };
 

@@ -10,6 +10,7 @@ import { VerifyEmailDto } from './dto/verify-email.dto';
 import { ResendVerificationDto } from './dto/resend-verification.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { StudentLoginDto } from './dto/student-login.dto';
+import { AdminLoginDto } from './dto/admin-login.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Controller('api/auth')
@@ -60,6 +61,11 @@ export class AuthController {
   @Post('student/login')
   studentLogin(@Body() dto: StudentLoginDto) {
     return this.authService.studentLogin(dto);
+  }
+
+  @Post('admin/login')
+  adminLogin(@Body() dto: AdminLoginDto) {
+    return this.authService.adminLogin(dto);
   }
 
   @UseGuards(JwtAuthGuard)
