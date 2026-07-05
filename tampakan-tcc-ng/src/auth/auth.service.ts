@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   UnauthorizedException,
@@ -13,6 +14,7 @@ import { LoginDto } from './dto/login.dto';
 import { RefreshDto } from './dto/refresh.dto';
 import { LogoutDto } from './dto/logout.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -178,5 +180,39 @@ export class AuthService {
       message: 'If that email is registered, a reset link has been sent',
       resetToken: rawToken,
     };
+  }
+
+  async resetPassword(dto: ResetPasswordDto) {
+    const tokenHash = createHash('sha256').update(dto.token).digest('hex');
+
+    const resetToken = await this.prisma.passwordResetToken.findUnique({
+      where: { token: tokenHash },
+    });
+
+    if (!resetToken) {
+      throw new BadRequestException('Invalid or expired reset token');
+    }
+
+    if (resetToken.used) {
+      throw new BadRequestException('Invalid or expired reset token');
+    }
+
+    if (resetToken.expiresAt < new Date()) {
+      throw new BadRequestException('Invalid or expired reset token');
+    }
+
+    const hashedPassword = await hash(dto.newPassword, 12);
+
+    await this.prisma.user.update({
+      where: { id: resetToken.userId },
+      data: { password: hashedPassword },
+    });
+
+    await this.prisma.passwordResetToken.update({
+      where: { id: resetToken.id },
+      data: { used: true },
+    });
+
+    return { message: 'Password has been reset successfully' };
   }
 }

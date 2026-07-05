@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConflictException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, ConflictException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { AuthService } from './auth.service';
 import { PrismaService } from '../prisma/prisma.service';
@@ -25,6 +25,7 @@ const mockPrisma = {
   user: {
     findUnique: jest.fn(),
     create: jest.fn(),
+    update: jest.fn(),
   },
   blacklistedToken: {
     findUnique: jest.fn(),
@@ -32,6 +33,8 @@ const mockPrisma = {
   },
   passwordResetToken: {
     create: jest.fn(),
+    findUnique: jest.fn(),
+    update: jest.fn(),
   },
 };
 
@@ -226,6 +229,68 @@ describe('AuthService', () => {
         'If that email is registered, a reset link has been sent',
       );
       expect(result.resetToken).toBeUndefined();
+    });
+  });
+
+  describe('resetPassword', () => {
+    const resetDto = { token: 'valid-raw-token', newPassword: 'newPass123' };
+    const validTokenRecord = {
+      id: 1,
+      userId: 1,
+      token: 'mocked-hash',
+      expiresAt: new Date(Date.now() + 600000),
+      used: false,
+      createdAt: new Date(),
+    };
+
+    it('should reset password for valid token', async () => {
+      mockPrisma.passwordResetToken.findUnique.mockResolvedValue(
+        validTokenRecord,
+      );
+
+      const result = await service.resetPassword(resetDto);
+
+      expect(result).toEqual({
+        message: 'Password has been reset successfully',
+      });
+      expect(mockPrisma.user.update).toHaveBeenCalledWith({
+        where: { id: 1 },
+        data: { password: '$2b$12$mockhashed' },
+      });
+      expect(mockPrisma.passwordResetToken.update).toHaveBeenCalledWith({
+        where: { id: 1 },
+        data: { used: true },
+      });
+    });
+
+    it('should throw BadRequestException when token not found', async () => {
+      mockPrisma.passwordResetToken.findUnique.mockResolvedValue(null);
+
+      await expect(service.resetPassword(resetDto)).rejects.toThrow(
+        BadRequestException,
+      );
+    });
+
+    it('should throw BadRequestException when token is already used', async () => {
+      mockPrisma.passwordResetToken.findUnique.mockResolvedValue({
+        ...validTokenRecord,
+        used: true,
+      });
+
+      await expect(service.resetPassword(resetDto)).rejects.toThrow(
+        BadRequestException,
+      );
+    });
+
+    it('should throw BadRequestException when token is expired', async () => {
+      mockPrisma.passwordResetToken.findUnique.mockResolvedValue({
+        ...validTokenRecord,
+        expiresAt: new Date(Date.now() - 600000),
+      });
+
+      await expect(service.resetPassword(resetDto)).rejects.toThrow(
+        BadRequestException,
+      );
     });
   });
 
