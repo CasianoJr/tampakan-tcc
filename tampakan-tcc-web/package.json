@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "clean": "powershell -NoProfile -File clean.ps1",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "oxlint",
