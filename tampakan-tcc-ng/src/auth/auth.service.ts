@@ -9,6 +9,7 @@ import { jwtConstants } from '../config/jwt.config';
 import { PrismaService } from '../prisma/prisma.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { RefreshDto } from './dto/refresh.dto';
 
 @Injectable()
 export class AuthService {
@@ -67,6 +68,41 @@ export class AuthService {
         expiresIn: 900,
       }),
       refresh_token: this.jwtService.sign(payload, {
+        expiresIn: 604800,
+      }),
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+      },
+    };
+  }
+
+  async refresh(dto: RefreshDto) {
+    let payload: { sub: number; email: string; role: string };
+
+    try {
+      payload = await this.jwtService.verifyAsync(dto.refreshToken);
+    } catch {
+      throw new UnauthorizedException('Invalid or expired refresh token');
+    }
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: payload.sub },
+    });
+
+    if (!user || !user.isActive) {
+      throw new UnauthorizedException('Invalid or expired refresh token');
+    }
+
+    const newPayload = { sub: user.id, email: user.email, role: user.role };
+
+    return {
+      access_token: this.jwtService.sign(newPayload, {
+        expiresIn: 900,
+      }),
+      refresh_token: this.jwtService.sign(newPayload, {
         expiresIn: 604800,
       }),
       user: {
