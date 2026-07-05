@@ -481,3 +481,5 @@ For each phase:
 7. Add guards / decorators as needed
 8. Manual test via curl / Postman / Swagger
 9. Write vitest unit/integration test
+
+> **Note:** After implementing a phase, add a `## Done` section at the bottom of the phase `.md` file listing each step with its status (`✅` / `❌`).
