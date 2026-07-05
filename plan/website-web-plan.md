@@ -279,3 +279,9 @@ Base URL: `https://tampakancommunitycollege.gov.ph`
 ## 8. Backend API Plan
 
 The backend is documented in [`website-ng-plan.md`](./website-ng-plan.md) — a NestJS + PostgreSQL API with 18 modules covering auth, students/pre-enrollment, news, events, programs, faculty, gallery, downloads, FAQ, contact, announcements, pages, uploads, settings, admin dashboard, notifications, search, and sitemap.
+
+## 9. Implementation Phases
+
+> **One endpoint/page per phase.** Each phase implements exactly one piece — one API endpoint or one frontend page. No bundling.
+
+Phase files live under `plan/ng/` and `plan/web/`. After implementing a phase, add a `## Done` section at the bottom of the phase `.md` file listing each completed step with status (`✅` / `❌`).

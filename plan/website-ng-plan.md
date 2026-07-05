@@ -471,6 +471,9 @@ Each phase builds exactly **one endpoint**. The order follows dependency order (
 | 108 | Sitemap | GET | `/api/sitemap` |
 
 ### Phase Workflow
+
+> **One endpoint per phase.** Each phase implements exactly one endpoint. No bundling.
+
 For each phase:
 1. Add/update Prisma schema (if new models/fields needed)
 2. Run `npx prisma migrate dev`
@@ -481,5 +484,4 @@ For each phase:
 7. Add guards / decorators as needed
 8. Manual test via curl / Postman / Swagger
 9. Write vitest unit/integration test
-
-> **Note:** After implementing a phase, add a `## Done` section at the bottom of the phase `.md` file listing each step with its status (`✅` / `❌`).
+10. Add a `## Done` section at the bottom of the phase `.md` file listing each completed step with status (`✅` / `❌`).
