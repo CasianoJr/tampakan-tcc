@@ -61,6 +61,49 @@ model PreEnrollment {
   guardianName     String
   guardianContact  String
   status           String   @default("PENDING")
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  // Expanded fields (optional for backward compatibility)
+  isTampakanResident Boolean?
+  admitType         String?
+  yearLevel         String?
+  schoolYear        String?
+  term              String?
+  lrn               String?
+  firstName         String?
+  middleName        String?
+  lastName          String?
+  suffix            String?
+  gender            String?
+  civilStatus       String?
+  citizenship       String?
+  birthplace        String?
+  religion          String?
+  telephoneNo       String?
+  currentAddress    String?
+  permanentAddress  String?
+  addressSameAsCurrent Boolean?
+  fatherFirstName   String?
+  fatherLastName    String?
+  fatherMiddleInitial String?
+  fatherSuffix      String?
+  fatherMobile      String?
+  fatherEmail       String?
+  fatherOccupation  String?
+  motherFirstName   String?
+  motherLastName    String?
+  motherMiddleInitial String?
+  motherSuffix      String?
+  motherMobile      String?
+  motherEmail       String?
+  motherOccupation  String?
+  guardianFirstName String?
+  guardianLastName  String?
+  guardianMiddleInitial String?
+  guardianSuffix    String?
+  guardianMobile    String?
+  guardianEmail     String?
+  guardianOccupation String?
+  guardianRelationship String?
+  referralSources   String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
