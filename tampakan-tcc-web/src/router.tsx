@@ -22,6 +22,7 @@ import FacultyProfilePage from './pages/faculty/FacultyProfilePage'
 import ContactPage from './pages/ContactPage'
 import DownloadsPage from './pages/DownloadsPage'
 import GalleryPage from './pages/GalleryPage'
+import FaqPage from './pages/FaqPage'
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +51,7 @@ export const router = createBrowserRouter([
       { path: '/contact', element: <ContactPage /> },
       { path: '/downloads', element: <DownloadsPage /> },
       { path: '/gallery', element: <GalleryPage /> },
+      { path: '/faq', element: <FaqPage /> },
     ],
   },
 ])
