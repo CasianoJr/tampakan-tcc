@@ -1,5 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom'
 import RootLayout from './layouts/RootLayout'
+import StudentLayout from './layouts/StudentLayout'
+import AdminLayout from './layouts/AdminLayout'
+import ProtectedStudentRoute from './components/auth/ProtectedStudentRoute'
+import ProtectedAdminRoute from './components/auth/ProtectedAdminRoute'
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/about/AboutPage'
 import HistoryPage from './pages/about/HistoryPage'
@@ -24,6 +28,11 @@ import DownloadsPage from './pages/DownloadsPage'
 import GalleryPage from './pages/GalleryPage'
 import FaqPage from './pages/FaqPage'
 import PreEnrollmentPage from './pages/PreEnrollmentPage'
+import StudentLoginPage from './pages/student/StudentLoginPage'
+import StudentDashboardPage from './pages/student/StudentDashboardPage'
+import StudentProfilePage from './pages/student/StudentProfilePage'
+import AdminLoginPage from './pages/admin/AdminLoginPage'
+import AdminDashboardPage from './pages/admin/AdminDashboardPage'
 
 export const router = createBrowserRouter([
   {
@@ -54,6 +63,35 @@ export const router = createBrowserRouter([
       { path: '/gallery', element: <GalleryPage /> },
       { path: '/faq', element: <FaqPage /> },
       { path: '/pre-enrollment', element: <PreEnrollmentPage /> },
+    ],
+  },
+  {
+    path: '/student',
+    element: <StudentLayout />,
+    children: [
+      { path: 'login', element: <StudentLoginPage /> },
+      {
+        element: <ProtectedStudentRoute />,
+        children: [
+          { path: 'dashboard', element: <StudentDashboardPage /> },
+          { path: 'profile', element: <StudentProfilePage /> },
+          { index: true, element: <StudentDashboardPage /> },
+        ],
+      },
+    ],
+  },
+  {
+    path: '/admin',
+    element: <AdminLayout />,
+    children: [
+      { path: 'login', element: <AdminLoginPage /> },
+      {
+        element: <ProtectedAdminRoute />,
+        children: [
+          { index: true, element: <AdminDashboardPage /> },
+          { path: 'dashboard', element: <AdminDashboardPage /> },
+        ],
+      },
     ],
   },
 ])

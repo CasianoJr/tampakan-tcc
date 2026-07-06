@@ -321,6 +321,13 @@ Pages are implemented in dependency order — parent before child, public before
 | 16 | `/admin/login`, `/admin` dashboard, admin CRUD pages | Phase 2 + backend auth |
 | 17 | `NotFoundPage` (404), error boundaries | Phase 2 |
 
+### Phase Numbering Note
+
+Phases 1–17 follow the original build order (public-facing pages). Starting from phase 50, numbers jump to indicate backend integration work:
+- **50+** — pre-enrollment form, student portal, admin dashboard
+- **80+** — live API wiring, replacing mock data with real backend calls (pre-enrollment form → `POST /api/students/pre-enroll`)
+The gap is intentional — it visually separates "static pages" from "backend-integrated" phases.
+
 ### Per-Phase Workflow
 
 1. Create the page component in `src/pages/`
