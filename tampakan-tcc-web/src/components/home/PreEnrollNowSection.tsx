@@ -31,7 +31,7 @@ export default function PreEnrollNowSection() {
             to="/student/login"
             className="inline-flex items-center gap-2 rounded-lg border border-cloud-white px-6 py-3 font-semibold transition-transform hover:scale-105"
           >
-            <LogIn size={18} /> Already pre-enrolled? Log in
+<LogIn size={18} /> <span className="sm:hidden">Log in</span><span className="hidden sm:inline">Already pre-enrolled? Log in</span>
           </Link>
         </div>
       </motion.div>

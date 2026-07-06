@@ -28,6 +28,7 @@ import DownloadsPage from './pages/DownloadsPage'
 import GalleryPage from './pages/GalleryPage'
 import FaqPage from './pages/FaqPage'
 import PreEnrollmentPage from './pages/PreEnrollmentPage'
+import NotFoundPage from './pages/NotFoundPage'
 import StudentLoginPage from './pages/student/StudentLoginPage'
 import StudentDashboardPage from './pages/student/StudentDashboardPage'
 import StudentProfilePage from './pages/student/StudentProfilePage'
@@ -63,6 +64,7 @@ export const router = createBrowserRouter([
       { path: '/gallery', element: <GalleryPage /> },
       { path: '/faq', element: <FaqPage /> },
       { path: '/pre-enrollment', element: <PreEnrollmentPage /> },
+      { path: '*', element: <NotFoundPage /> },
     ],
   },
   {

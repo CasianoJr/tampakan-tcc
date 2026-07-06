@@ -16,8 +16,35 @@ export default function TimelineSection() {
         <h2 className="mb-12 text-center text-2xl font-bold text-deep-soil md:text-3xl">
           Our Journey
         </h2>
-        <div className="relative flex items-start justify-between gap-2">
-          <div className="absolute top-5 left-0 right-0 h-0.5 bg-harvest-green/30 hidden md:block" />
+
+        {/* Mobile: vertical timeline */}
+        <div className="relative md:hidden">
+          <div className="absolute top-0 bottom-0 left-5 w-0.5 bg-harvest-green/30" />
+          <div className="flex flex-col gap-8">
+            {steps.map((s, i) => (
+              <motion.div
+                key={s.label}
+                initial={{ opacity: 0, x: -10 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+                className="relative flex items-center gap-4 pl-14"
+              >
+                <div className="absolute left-2.5 flex h-6 w-6 items-center justify-center rounded-full bg-harvest-green text-cloud-white z-10">
+                  <s.icon size={14} />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-deep-soil">{s.label}</p>
+                  <p className="text-xs text-slate-ink/60">{s.year}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop: horizontal timeline */}
+        <div className="relative hidden items-start justify-between gap-2 md:flex">
+          <div className="absolute top-5 left-0 right-0 h-0.5 bg-harvest-green/30" />
           {steps.map((s, i) => (
             <motion.div
               key={s.label}
