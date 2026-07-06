@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, LogIn } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 export default function PreEnrollNowSection() {
   return (
@@ -20,18 +21,18 @@ export default function PreEnrollNowSection() {
           the free education program.
         </p>
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <a
-            href="/pre-enrollment"
+          <Link
+            to="/pre-enrollment"
             className="inline-flex items-center gap-2 rounded-lg bg-golden-grain px-6 py-3 font-semibold text-deep-soil transition-transform hover:scale-105"
           >
             Pre-Enroll Now <ArrowRight size={18} />
-          </a>
-          <a
-            href="/student/login"
+          </Link>
+          <Link
+            to="/student/login"
             className="inline-flex items-center gap-2 rounded-lg border border-cloud-white px-6 py-3 font-semibold transition-transform hover:scale-105"
           >
             <LogIn size={18} /> Already pre-enrolled? Log in
-          </a>
+          </Link>
         </div>
       </motion.div>
     </section>
