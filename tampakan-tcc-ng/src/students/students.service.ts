@@ -179,6 +179,71 @@ export class StudentsService {
     };
   }
 
+  async getProfile(refNo: string) {
+    const enrollment = await this.prisma.preEnrollment.findUnique({
+      where: { referenceNumber: refNo },
+    });
+
+    if (!enrollment) {
+      throw new NotFoundException('Pre-enrollment record not found');
+    }
+
+    return {
+      refNo: enrollment.referenceNumber,
+      fullName: enrollment.fullName,
+      birthdate: enrollment.birthdate,
+      contactNumber: enrollment.contactNumber,
+      email: enrollment.email,
+      address: enrollment.address,
+      lastSchool: enrollment.lastSchool,
+      desiredProgram: enrollment.desiredProgram,
+      status: enrollment.status,
+      isTampakanResident: enrollment.isTampakanResident,
+      admitType: enrollment.admitType,
+      yearLevel: enrollment.yearLevel,
+      schoolYear: enrollment.schoolYear,
+      term: enrollment.term,
+      lrn: enrollment.lrn,
+      firstName: enrollment.firstName,
+      middleName: enrollment.middleName,
+      lastName: enrollment.lastName,
+      suffix: enrollment.suffix,
+      gender: enrollment.gender,
+      civilStatus: enrollment.civilStatus,
+      citizenship: enrollment.citizenship,
+      birthplace: enrollment.birthplace,
+      religion: enrollment.religion,
+      telephoneNo: enrollment.telephoneNo,
+      currentAddress: enrollment.currentAddress,
+      permanentAddress: enrollment.permanentAddress,
+      addressSameAsCurrent: enrollment.addressSameAsCurrent,
+      fatherFirstName: enrollment.fatherFirstName,
+      fatherLastName: enrollment.fatherLastName,
+      fatherMiddleInitial: enrollment.fatherMiddleInitial,
+      fatherSuffix: enrollment.fatherSuffix,
+      fatherMobile: enrollment.fatherMobile,
+      fatherEmail: enrollment.fatherEmail,
+      fatherOccupation: enrollment.fatherOccupation,
+      motherFirstName: enrollment.motherFirstName,
+      motherLastName: enrollment.motherLastName,
+      motherMiddleInitial: enrollment.motherMiddleInitial,
+      motherSuffix: enrollment.motherSuffix,
+      motherMobile: enrollment.motherMobile,
+      motherEmail: enrollment.motherEmail,
+      motherOccupation: enrollment.motherOccupation,
+      guardianFirstName: enrollment.guardianFirstName,
+      guardianLastName: enrollment.guardianLastName,
+      guardianMiddleInitial: enrollment.guardianMiddleInitial,
+      guardianSuffix: enrollment.guardianSuffix,
+      guardianMobile: enrollment.guardianMobile,
+      guardianEmail: enrollment.guardianEmail,
+      guardianOccupation: enrollment.guardianOccupation,
+      guardianRelationship: enrollment.guardianRelationship,
+      referralSources: enrollment.referralSources,
+      submittedAt: enrollment.createdAt,
+    };
+  }
+
   async updateStatus(refNo: string, dto: PreEnrollmentStatusDto) {
     const enrollment = await this.prisma.preEnrollment.findUnique({
       where: { referenceNumber: refNo },

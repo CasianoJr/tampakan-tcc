@@ -217,6 +217,81 @@ describe('StudentsService', () => {
     });
   });
 
+  describe('getProfile', () => {
+    const refNo = 'TCC-ABCDEF';
+
+    it('should return the full pre-enrollment profile', async () => {
+      const mockEnrollment = {
+        referenceNumber: refNo,
+        fullName: 'Juan Dela Cruz',
+        birthdate: new Date('2000-01-15'),
+        contactNumber: '09170000000',
+        email: 'juan@example.com',
+        address: 'Poblacion, Tampakan',
+        lastSchool: 'TNHS',
+        desiredProgram: 'Agri-Business',
+        status: 'PENDING',
+        isTampakanResident: true,
+        admitType: null,
+        yearLevel: null,
+        schoolYear: null,
+        term: null,
+        lrn: null,
+        firstName: null,
+        middleName: null,
+        lastName: null,
+        suffix: null,
+        gender: null,
+        civilStatus: null,
+        citizenship: null,
+        birthplace: null,
+        religion: null,
+        telephoneNo: null,
+        currentAddress: null,
+        permanentAddress: null,
+        addressSameAsCurrent: null,
+        fatherFirstName: null,
+        fatherLastName: null,
+        fatherMiddleInitial: null,
+        fatherSuffix: null,
+        fatherMobile: null,
+        fatherEmail: null,
+        fatherOccupation: null,
+        motherFirstName: null,
+        motherLastName: null,
+        motherMiddleInitial: null,
+        motherSuffix: null,
+        motherMobile: null,
+        motherEmail: null,
+        motherOccupation: null,
+        guardianFirstName: null,
+        guardianLastName: null,
+        guardianMiddleInitial: null,
+        guardianSuffix: null,
+        guardianMobile: null,
+        guardianEmail: null,
+        guardianOccupation: null,
+        guardianRelationship: null,
+        referralSources: null,
+        createdAt: new Date('2026-07-06'),
+      };
+
+      mockPrisma.preEnrollment.findUnique.mockResolvedValue(mockEnrollment);
+
+      const result = await service.getProfile(refNo);
+
+      expect(result.refNo).toBe(refNo);
+      expect(result.fullName).toBe('Juan Dela Cruz');
+      expect(result.status).toBe('PENDING');
+    });
+
+    it('should throw NotFoundException when refNo does not exist', async () => {
+      mockPrisma.preEnrollment.findUnique.mockResolvedValue(null);
+
+      await expect(service.getProfile(refNo)).rejects.toThrow(NotFoundException);
+    });
+  });
+
   describe('updateStatus', () => {
     const refNo = 'TCC-ABCDEF';
 
