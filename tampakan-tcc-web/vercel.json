@@ -1,4 +1,10 @@
 {
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://tampakan-tcc-ng.vercel.app/api/:path*"
+    }
+  ],
   "headers": [
     {
       "source": "/site.webmanifest",
