@@ -1,7 +1,14 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { randomBytes } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import { PreEnrollDto } from './dto/pre-enroll.dto';
+import { PreEnrollmentStatusDto } from './dto/pre-enrollment-status.dto';
+import { PreEnrollmentQueryDto } from './dto/pre-enrollment-query.dto';
 
 @Injectable()
 export class StudentsService {
@@ -105,5 +112,105 @@ export class StudentsService {
       }
       throw error;
     }
+  }
+
+  async getByRefNo(refNo: string, birthdate: string) {
+    const enrollment = await this.prisma.preEnrollment.findUnique({
+      where: { referenceNumber: refNo },
+    });
+
+    if (!enrollment) {
+      throw new NotFoundException(
+        `Pre-enrollment with reference number ${refNo} not found`,
+      );
+    }
+
+    const providedDate = new Date(birthdate);
+    const storedDate = new Date(enrollment.birthdate);
+
+    if (providedDate.getTime() !== storedDate.getTime()) {
+      throw new BadRequestException('Birthdate does not match our records');
+    }
+
+    return {
+      refNo: enrollment.referenceNumber,
+      status: enrollment.status,
+      course: enrollment.desiredProgram,
+      firstName: enrollment.firstName ?? enrollment.fullName.split(' ')[0],
+      lastName: enrollment.lastName ?? enrollment.fullName.split(' ').slice(-1)[0],
+      birthdate: enrollment.birthdate,
+      email: enrollment.email,
+      phone: enrollment.contactNumber,
+      submittedAt: enrollment.createdAt,
+    };
+  }
+
+  async findAll(query: PreEnrollmentQueryDto) {
+    const { status, course, page = 1, limit = 20 } = query;
+    const skip = (page - 1) * limit;
+
+    const where: any = {};
+
+    if (status) where.status = status;
+    if (course) where.desiredProgram = course;
+
+    const [items, total] = await Promise.all([
+      this.prisma.preEnrollment.findMany({
+        where,
+        skip,
+        take: limit,
+        orderBy: { createdAt: 'desc' },
+      }),
+      this.prisma.preEnrollment.count({ where }),
+    ]);
+
+    return {
+      items: items.map((e) => ({
+        refNo: e.referenceNumber,
+        fullName: e.fullName,
+        course: e.desiredProgram,
+        status: e.status,
+        submittedAt: e.createdAt,
+      })),
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
+  }
+
+  async updateStatus(refNo: string, dto: PreEnrollmentStatusDto) {
+    const enrollment = await this.prisma.preEnrollment.findUnique({
+      where: { referenceNumber: refNo },
+    });
+
+    if (!enrollment) {
+      throw new NotFoundException(
+        `Pre-enrollment with reference number ${refNo} not found`,
+      );
+    }
+
+    if (enrollment.status === 'APPROVED' || enrollment.status === 'REJECTED') {
+      throw new BadRequestException(
+        `Pre-enrollment is already ${enrollment.status.toLowerCase()}`,
+      );
+    }
+
+    if (dto.status === 'REJECTED' && !dto.rejectionReason) {
+      throw new BadRequestException(
+        'Rejection reason is required when rejecting a pre-enrollment',
+      );
+    }
+
+    const updated = await this.prisma.preEnrollment.update({
+      where: { referenceNumber: refNo },
+      data: { status: dto.status },
+    });
+
+    return {
+      refNo: updated.referenceNumber,
+      status: updated.status,
+      message: `Pre-enrollment ${dto.status.toLowerCase()} successfully`,
+    };
   }
 }
