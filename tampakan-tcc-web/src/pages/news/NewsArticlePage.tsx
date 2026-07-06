@@ -27,7 +27,7 @@ export default function NewsArticlePage() {
       <section className="relative flex min-h-[30svh] items-center justify-center overflow-hidden px-4 text-center text-cloud-white">
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/assets/TCC_building.jpg')" }}
+          style={{ backgroundImage: "url('/TCC_LOGO_512x512.png')" }}
         />
         <div className="absolute inset-0 bg-gradient-to-br from-harvest-green/85 to-deep-soil/90" />
         <motion.div

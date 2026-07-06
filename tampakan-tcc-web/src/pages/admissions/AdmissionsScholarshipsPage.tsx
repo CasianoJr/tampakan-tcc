@@ -27,7 +27,7 @@ export default function AdmissionsScholarshipsPage() {
           className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('/assets/TCC_building.jpg')",
+              "url('/TCC_LOGO_512x512.png')",
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-br from-harvest-green/85 to-deep-soil/90" />

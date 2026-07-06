@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { Quote, Users } from 'lucide-react'
+import mayorImg from '../../assets/mayors-image.jpg'
 
 const team = [
   { name: 'Dr. Maria Giovanna Abecia', role: 'Education Consultant', initials: 'MA' },
@@ -14,7 +15,7 @@ export default function LeadershipPage() {
             className="absolute inset-0 bg-cover bg-center"
             style={{
               backgroundImage:
-                "url('/assets/TCC_building.jpg')",
+                "url('/TCC_LOGO_512x512.png')",
             }}
           />
         <div className="absolute inset-0 bg-gradient-to-br from-harvest-green/85 to-deep-soil/90" />
@@ -41,7 +42,7 @@ export default function LeadershipPage() {
           >
             <div className="flex flex-col items-center gap-6 md:flex-row">
               <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=160&q=80"
+                src={mayorImg}
                 alt="Mayor Leonard T. Escobillo portrait"
                 loading="lazy"
                 className="h-28 w-28 shrink-0 rounded-full object-cover"

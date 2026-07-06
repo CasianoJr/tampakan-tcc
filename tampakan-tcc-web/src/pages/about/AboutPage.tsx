@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { ScrollText, Eye, Users, Quote } from 'lucide-react'
+import mayorImg from '../../assets/mayors-image.jpg'
 
 const subpages = [
   {
@@ -31,7 +32,7 @@ export default function AboutPage() {
             className="absolute inset-0 bg-cover bg-center"
             style={{
               backgroundImage:
-                "url('/assets/TCC_building.jpg')",
+              "url('/assets/TCC_building.jpg')",
             }}
           />
         <div className="absolute inset-0 bg-gradient-to-br from-harvest-green/85 to-deep-soil/90" />
@@ -99,9 +100,7 @@ export default function AboutPage() {
                 be there to support them every step of the way.
               </p>
               <div className="flex items-center gap-3">
-                <div className="h-12 w-12 rounded-full bg-harvest-green flex items-center justify-center text-cloud-white font-bold text-sm">
-                  LE
-                </div>
+                <img src={mayorImg} alt="Mayor Leonard T. Escobillo" className="h-14 w-14 rounded-full object-cover" />
                 <div>
                   <p className="font-semibold text-deep-soil">
                     Mayor Leonard T. Escobillo, RN

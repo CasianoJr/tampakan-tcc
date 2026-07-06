@@ -17,8 +17,12 @@ export default function Navbar() {
   return (
     <nav className="bg-harvest-green text-cloud-white sticky top-0 z-50">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-        <Link to="/" className="text-lg font-bold tracking-tight">
-          TCC
+        <Link to="/" className="flex items-center gap-3">
+          <img src="/TCC_LOGO_300x300.png" alt="TCC Logo" className="h-12 w-auto" />
+          <div className="italic leading-tight text-cloud-white" style={{ fontFamily: "'Playfair Display', serif" }}>
+            <div style={{ fontSize: "1.25rem" }}>Tampakan</div>
+            <div style={{ fontSize: "0.9rem" }}>Community College</div>
+          </div>
         </Link>
 
         <button
