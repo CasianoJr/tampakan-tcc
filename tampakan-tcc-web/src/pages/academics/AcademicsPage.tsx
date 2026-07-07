@@ -7,13 +7,13 @@ const links = [
     icon: BookOpen,
     title: 'Programs',
     desc: 'Explore our planned academic programs designed for local and regional needs.',
-    to: '/academics/programs',
+    to: '/academics',
   },
   {
     icon: Calendar,
     title: 'Academic Calendar',
     desc: 'Key dates, enrollment periods, and the school year schedule.',
-    to: '/academics/calendar',
+    to: '/academics',
   },
 ]
 

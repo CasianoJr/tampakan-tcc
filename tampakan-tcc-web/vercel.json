@@ -3,6 +3,10 @@
     {
       "source": "/api/:path*",
       "destination": "https://tampakan-tcc-ng.vercel.app/api/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [

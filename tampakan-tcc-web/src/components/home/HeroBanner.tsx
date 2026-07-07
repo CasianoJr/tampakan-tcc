@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 
 export default function HeroBanner() {
@@ -16,18 +17,18 @@ export default function HeroBanner() {
           Empowering the youth of Tampakan through quality, tuition-free tertiary education.
         </p>
         <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <a
-            href="/academics/programs"
+          <Link
+            to="/academics"
             className="rounded-lg bg-golden-grain px-6 py-3 font-semibold text-deep-soil transition-transform hover:scale-105"
           >
             Explore Programs
-          </a>
-          <a
-            href="/contact"
+          </Link>
+          <Link
+            to="/contact"
             className="rounded-lg border border-cloud-white px-6 py-3 font-semibold transition-transform hover:scale-105"
           >
             Get Updates
-          </a>
+          </Link>
         </div>
       </motion.div>
     </section>

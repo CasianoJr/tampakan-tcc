@@ -17,7 +17,7 @@ export default function Footer() {
           <ul className="space-y-1 text-sm">
             {[
               { to: '/about', label: 'About Us' },
-              { to: '/academics/programs', label: 'Programs' },
+              { to: '/academics', label: 'Programs' },
               { to: '/admissions', label: 'Admissions' },
               { to: '/contact', label: 'Contact' },
               { to: '/faq', label: 'FAQ' },

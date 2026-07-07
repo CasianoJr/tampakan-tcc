@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Sprout, GraduationCap, Monitor } from 'lucide-react'
 
@@ -47,12 +48,12 @@ export default function ProgramsPreview() {
                 {p.title}
               </h3>
               <p className="mb-4 text-sm text-slate-ink/70">{p.description}</p>
-              <a
-                href="/academics/programs"
+              <Link
+                to="/academics"
                 className="text-sm font-semibold text-harvest-green hover:text-golden-grain transition-colors"
               >
                 Learn More &rarr;
-              </a>
+              </Link>
             </motion.div>
           ))}
         </div>

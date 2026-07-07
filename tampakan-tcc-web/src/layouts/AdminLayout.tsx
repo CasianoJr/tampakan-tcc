@@ -1,5 +1,6 @@
 import { Outlet, Link } from 'react-router-dom'
 import { LogOut, Home } from 'lucide-react'
+import ScrollToTop from '../components/ScrollToTop'
 import { useAdminAuth } from '../contexts/AdminAuthContext'
 
 export default function AdminLayout() {
@@ -7,6 +8,7 @@ export default function AdminLayout() {
 
   return (
     <div className="flex min-h-svh flex-col">
+      <ScrollToTop />
       <nav className="bg-deep-soil text-cloud-white sticky top-0 z-50">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
           <Link to="/" className="flex items-center gap-3">
