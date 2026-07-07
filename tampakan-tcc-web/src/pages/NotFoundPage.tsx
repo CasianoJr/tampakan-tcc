@@ -11,9 +11,9 @@ export default function NotFoundPage() {
         transition={{ duration: 0.4 }}
       >
         <h1 className="text-7xl font-bold text-harvest-green md:text-9xl">404</h1>
-        <p className="mt-4 text-xl font-semibold text-deep-soil">Page Not Found</p>
+        <p className="mt-4 text-xl font-semibold text-deep-soil">Page Under Construction</p>
         <p className="mt-2 text-sm text-slate-ink/60 max-w-sm">
-          The page you're looking for doesn't exist or has been moved.
+          This page is currently under development. Please contact the development team for more information.
         </p>
         <Link
           to="/"

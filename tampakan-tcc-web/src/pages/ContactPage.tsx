@@ -136,13 +136,20 @@ export default function ContactPage() {
             </h2>
 
             <div className="space-y-4">
-              <div className="flex items-start gap-3">
-                <MapPin size={20} className="mt-0.5 shrink-0 text-harvest-green" />
+              <a
+                href="https://www.google.com/maps/place/Koronadal+Academy+High+School/@6.4391434,124.9264904,19.5z/data=!4m6!3m5!1s0x32f821186a01e93b:0x1e7dfaf975e46c83!8m2!3d6.4392302!4d124.9273603!16s%2Fg%2F1tjs_g8f?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-3 group"
+              >
+                <MapPin size={20} className="mt-0.5 shrink-0 text-harvest-green group-hover:text-harvest-green/80 transition-colors" />
                 <div>
                   <p className="font-medium text-deep-soil">Address</p>
-                  <p className="text-sm text-slate-ink/70">{contactInfo.address}</p>
+                  <p className="text-sm text-slate-ink/70 underline underline-offset-2 group-hover:text-harvest-green transition-colors">
+                    {contactInfo.address}
+                  </p>
                 </div>
-              </div>
+              </a>
               <div className="flex items-start gap-3">
                 <Phone size={20} className="mt-0.5 shrink-0 text-harvest-green" />
                 <div>
@@ -168,13 +175,18 @@ export default function ContactPage() {
 
             <div className="mt-8 rounded-xl bg-sky-field p-6">
               <h3 className="mb-2 font-bold text-deep-soil">Location</h3>
-              <div className="aspect-[16/9] overflow-hidden rounded-lg bg-harvest-green/10 flex items-center justify-center text-sm text-slate-ink/50">
+              <a
+                href="https://www.google.com/maps/place/Koronadal+Academy+High+School/@6.4391434,124.9264904,19.5z/data=!4m6!3m5!1s0x32f821186a01e93b:0x1e7dfaf975e46c83!8m2!3d6.4392302!4d124.9273603!16s%2Fg%2F1tjs_g8f?entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block aspect-[16/9] overflow-hidden rounded-lg bg-harvest-green/10 flex items-center justify-center text-sm text-slate-ink/50 hover:bg-harvest-green/20 transition-colors"
+              >
                 <div className="text-center p-4">
                   <MapPin size={32} className="mx-auto mb-2 text-harvest-green" />
                   <p>Former Koronadal Academy Site</p>
                   <p>Poblacion, Tampakan, South Cotabato</p>
                 </div>
-              </div>
+              </a>
             </div>
           </motion.div>
         </div>

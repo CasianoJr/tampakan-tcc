@@ -917,10 +917,12 @@ export default function PreEnrollmentPage() {
                   <p className="mb-3 text-sm text-slate-ink/70">Who referred you to TCC?</p>
                   <div className="flex flex-wrap gap-2">
                     {['Friends', 'Parents', 'Relatives'].map((opt) => (
-                      <button
+                      <span
                         key={opt}
-                        type="button"
+                        role="button"
+                        tabIndex={0}
                         onClick={() => toggleReferral(opt)}
+                        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleReferral(opt) }}
                         className={`cursor-pointer rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
                           referrals.includes(opt)
                             ? 'bg-harvest-green text-cloud-white'
@@ -928,7 +930,7 @@ export default function PreEnrollmentPage() {
                         }`}
                       >
                         {opt}
-                      </button>
+                      </span>
                     ))}
                   </div>
                 </div>
@@ -937,10 +939,12 @@ export default function PreEnrollmentPage() {
                   <p className="mb-3 text-sm text-slate-ink/70">How did you find out about TCC?</p>
                   <div className="flex flex-wrap gap-2">
                     {referralOptions.slice(3).map((opt) => (
-                      <button
+                      <span
                         key={opt}
-                        type="button"
+                        role="button"
+                        tabIndex={0}
                         onClick={() => toggleReferral(opt)}
+                        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleReferral(opt) }}
                         className={`cursor-pointer rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
                           referrals.includes(opt)
                             ? 'bg-harvest-green text-cloud-white'
@@ -948,7 +952,7 @@ export default function PreEnrollmentPage() {
                         }`}
                       >
                         {opt}
-                      </button>
+                      </span>
                     ))}
                   </div>
                 </div>
